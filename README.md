@@ -1,1 +1,1 @@
-# pizza-delight
+# Pizza Delight
