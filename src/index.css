@@ -1,7 +1,37 @@
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap");
 @import "tailwindcss";
+
+:root {
+  --font-heading: "Playfair Display";
+  --font-body: "Montserrat";
+  --font-default: "Roboto";
+
+  --color-red: #d62828;
+  --color-olive: #3d5a2b;
+  --color-tomato: #a81817;
+
+  --color-hover: #f3f3f1;
+}
 
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+}
+
+body {
+  font-family: var(--font-body), sans-serif, serif;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: var(--font-heading), sans-serif, serif;
+}
+
+.active {
+  color: var(--color-tomato);
 }

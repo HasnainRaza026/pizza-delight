@@ -28,3 +28,6 @@ App.css
 *.njsproj
 *.sln
 *.sw?
+
+# Project TODOs
+.todo
