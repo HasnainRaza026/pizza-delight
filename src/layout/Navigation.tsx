@@ -1,9 +1,20 @@
 import { NavLink } from "react-router";
+import { SidebarProps } from "../types/PlacedProp";
 
-function Navigation() {
+function Navigation({ placedOn, setIsSidebarOpen }: SidebarProps) {
+  let placedOnDirectionCSS: string = "";
+  let placedOnDisplayCSS: string = "";
+  if (placedOn === "header") {
+    placedOnDirectionCSS = "flex-row gap-6";
+    placedOnDisplayCSS = "hidden md:block";
+  } else if (placedOn === "sidebar") {
+    placedOnDirectionCSS = "flex-col gap-4";
+    placedOnDisplayCSS = "block";
+  }
+
   return (
-    <nav className="hidden md:block">
-      <ul className="flex gap-6">
+    <nav className={`${placedOnDisplayCSS}`}>
+      <ul className={`flex ${placedOnDirectionCSS}`}>
         <NavLink to="/">
           <li className="text-xl font-medium cursor-pointer hover:text-[var(--color-tomato)]">
             Home
