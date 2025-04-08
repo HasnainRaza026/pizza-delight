@@ -15,26 +15,26 @@ function Navigation({ placedOn, setIsSidebarOpen }: SidebarProps) {
   return (
     <nav className={`${placedOnDisplayCSS}`}>
       <ul className={`flex ${placedOnDirectionCSS}`}>
-        <NavLink to="/">
-          <li className="text-xl font-medium cursor-pointer hover:text-[var(--color-tomato)]">
+        <li className="text-xl font-medium cursor-pointer hover:text-[var(--color-tomato)]">
+          <NavLink to="/" onClick={() => setIsSidebarOpen(false)}>
             Home
-          </li>
-        </NavLink>
-        <NavLink to="/menu">
-          <li className="text-xl font-medium cursor-pointer hover:text-[var(--color-tomato)]">
+          </NavLink>
+        </li>
+        <li className="text-xl font-medium cursor-pointer hover:text-[var(--color-tomato)]">
+          <NavLink to="/menu" onClick={() => setIsSidebarOpen(false)}>
             Menu
-          </li>
-        </NavLink>
-        <NavLink to="/about">
-          <li className="text-xl font-medium cursor-pointer hover:text-[var(--color-tomato)]">
+          </NavLink>
+        </li>
+        <li className="text-xl font-medium cursor-pointer hover:text-[var(--color-tomato)]">
+          <NavLink to="/about" onClick={() => setIsSidebarOpen(false)}>
             About
-          </li>
-        </NavLink>
-        <NavLink to="/contact">
-          <li className="text-xl font-medium cursor-pointer hover:text-[var(--color-tomato)]">
+          </NavLink>
+        </li>
+        <li className="text-xl font-medium cursor-pointer hover:text-[var(--color-tomato)]">
+          <NavLink to="/contact" onClick={() => setIsSidebarOpen(false)}>
             Contact
-          </li>
-        </NavLink>
+          </NavLink>
+        </li>
       </ul>
     </nav>
   );
