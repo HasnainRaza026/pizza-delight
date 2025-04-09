@@ -11,7 +11,7 @@ function Header() {
 
   return (
     <>
-      <header className="w-full flex justify-between items-center !p-2.5 sm:!px-5 sm:!py-2.5">
+      <header className="sticky z-10 top-0 bg-white/90 backdrop-blur-md shadow-sm w-full flex justify-between items-center !p-2.5 sm:!px-5 sm:!py-2.5">
         <Link to="/" className="font-bold text-2xl cursor-pointer">
           <span className="text-[var(--color-red)]">Pizza</span>
           <span className="text-[var(--color-olive)]">Delight</span>
@@ -41,12 +41,10 @@ function Header() {
       </header>
 
       {/* SideBar */}
-      {isSidebarOpen && (
-        <SideBar
-          isSidebarOpen={isSidebarOpen}
-          setIsSidebarOpen={setIsSidebarOpen}
-        />
-      )}
+      <SideBar
+        isSidebarOpen={isSidebarOpen}
+        setIsSidebarOpen={setIsSidebarOpen}
+      />
     </>
   );
 }

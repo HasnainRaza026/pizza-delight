@@ -32,6 +32,10 @@ h6 {
   font-family: var(--font-heading), sans-serif, serif;
 }
 
+button {
+  cursor: pointer;
+}
+
 .active {
   color: var(--color-tomato);
 }
