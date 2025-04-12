@@ -35,7 +35,7 @@ function SideBar({ isSidebarOpen, setIsSidebarOpen }: SidebarToggleProp) {
   return (
     <div
       ref={sidebarRef}
-      className={`w-full h-dvh fixed z-[999] top-0 ${isSidebarOpen ? "right-0" : "-right-[500px]"} bg-white/80 backdrop-blur-md !py-4 !px-5 shadow-2xl transition-all delay-700 ease-out sm:w-90`}
+      className={`w-full h-dvh fixed z-[999] top-0 bg-white/80 backdrop-blur-md !py-4 !px-5 shadow-2xl transition-all duration-700 ease-out ${isSidebarOpen ? "right-0" : "-right-[500px]"} sm:w-90`}
     >
       <div
         onClick={() => setIsSidebarOpen(false)}

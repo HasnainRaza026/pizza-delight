@@ -6,10 +6,10 @@
   --font-body: "Montserrat";
   --font-default: "Roboto";
 
+  --color-font-black: #1d1d1d;
   --color-red: #d62828;
   --color-olive: #3d5a2b;
   --color-tomato: #a81817;
-
   --color-hover: #f3f3f1;
 }
 
@@ -21,6 +21,7 @@
 
 body {
   font-family: var(--font-body), sans-serif, serif;
+  padding-bottom: 100px;
 }
 
 h1,
@@ -34,6 +35,11 @@ h6 {
 
 button {
   cursor: pointer;
+  transition: background-color 150ms ease-in-out;
+}
+
+button:hover {
+  background-color: var(--color-tomato);
 }
 
 .active {

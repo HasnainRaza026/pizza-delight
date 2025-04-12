@@ -7,7 +7,7 @@ type ButtonProps = {
 
 function Button({ text, icon }: ButtonProps) {
   return (
-    <button className="text-white flex items-center gap-4 !px-6 !py-3.5 rounded-md bg-[var(--color-red)] hover:bg-[var(--color-tomato)] transition ease-in-out delay-150">
+    <button className="text-white flex items-center gap-4 !px-6 !py-3.5 rounded-md bg-[var(--color-red)]">
       {text}
       {icon}
     </button>
