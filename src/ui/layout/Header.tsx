@@ -1,8 +1,8 @@
 import { Link } from "react-router";
 import { ShoppingCart, Menu } from "lucide-react";
 import Navigation from "./Navigation";
-import Profile from "../ui/Profile";
-import Phone from "../ui/Phone";
+import Profile from "../Profile";
+import Phone from "../Phone";
 import SideBar from "./SideBar";
 import { useState } from "react";
 

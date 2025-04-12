@@ -1,6 +1,6 @@
 import { X } from "lucide-react";
-import Phone from "../ui/Phone";
-import Profile from "../ui/Profile";
+import Phone from "../Phone";
+import Profile from "../Profile";
 import Navigation from "./Navigation";
 import { useEffect, useRef } from "react";
 

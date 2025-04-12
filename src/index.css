@@ -38,10 +38,6 @@ button {
   transition: background-color 150ms ease-in-out;
 }
 
-button:hover {
-  background-color: var(--color-tomato);
-}
-
 .active {
   color: var(--color-tomato);
 }

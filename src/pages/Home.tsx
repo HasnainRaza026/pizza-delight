@@ -1,7 +1,7 @@
 import { ArrowRight } from "lucide-react";
 import Button from "../ui/Button";
 import styled from "styled-components";
-import PizzaMenuCard from "../layout/PizzaMenuCard";
+import PizzaMenuCard from "../ui/layout/PizzaMenuCard";
 
 const SectionHeading = styled.h2`
   font-family: var(--font-heading);
@@ -25,7 +25,7 @@ const SectionHeading = styled.h2`
   }
 
   @media (min-width: 768px) {
-    font-size: 2.25rem;
+    font-size: 2.25rem; // 36px
   }
 `;
 
@@ -59,7 +59,10 @@ function HomePage() {
               </span>
             </p>
           </div>
-          <Button text="Order Now" icon={<ArrowRight size={20} />} />
+          <Button>
+            Order Now
+            <ArrowRight size={20} />
+          </Button>
         </div>
       </section>
 

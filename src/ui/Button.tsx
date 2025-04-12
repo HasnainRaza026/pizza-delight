@@ -1,17 +1,17 @@
-import React from "react";
+import styled from "styled-components";
 
-type ButtonProps = {
-  text: string;
-  icon?: React.ReactNode;
-};
+const Button = styled.button`
+  color: white;
+  background-color: var(--color-red);
+  border-radius: 6px;
+  padding: 14px 24px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
 
-function Button({ text, icon }: ButtonProps) {
-  return (
-    <button className="text-white flex items-center gap-4 !px-6 !py-3.5 rounded-md bg-[var(--color-red)]">
-      {text}
-      {icon}
-    </button>
-  );
-}
+  &:hover {
+    background-color: var(--color-tomato);
+  }
+`;
 
 export default Button;
