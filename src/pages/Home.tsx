@@ -1,8 +1,11 @@
-import { ArrowRight, Pizza, Soup, Truck } from "lucide-react";
+import { ArrowLeft, ArrowRight, Pizza, Soup, Truck } from "lucide-react";
 import Button from "../ui/Button";
 import styled from "styled-components";
 import PizzaMenuCard from "../ui/layout/PizzaMenuCard";
 import DeliveryCard from "../ui/layout/DeliveryCard";
+import TestimonialCard from "../ui/layout/TestimonialCard";
+import { useState } from "react";
+import { testimonials } from "../data/testimonials";
 
 const SectionHeading = styled.h2`
   font-family: var(--font-heading);
@@ -49,12 +52,30 @@ const SectionDescription = styled.p`
   }
 `;
 
+const TestimonialButton = styled.button`
+  width: 40px;
+  height: 40px;
+  border: 1px solid var(--color-red);
+  border-radius: 1000px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: var(--color-red);
+  transition: all 150ms ease;
+
+  &:hover {
+    background-color: var(--color-red);
+    color: white;
+  }
+`;
+
 function HomePage() {
   return (
     <>
       <HeroSection />
       <MenuSection />
       <DeliverySection />
+      <TestimonialSection />
     </>
   );
 }
@@ -161,6 +182,58 @@ function DeliverySection() {
           title="Enjoy Your Food"
           description="Enjoy the best quality Pizza, hand-crafted with premium ingredients. Bringing to you the authentic taste of Italy"
         />
+      </div>
+    </section>
+  );
+}
+
+function TestimonialSection() {
+  const [activeIndex, setActiveIndex] = useState<number>(0);
+
+  const handlePrev = () => {
+    setActiveIndex((prevIndex) =>
+      prevIndex === 0 ? testimonials.length - 1 : prevIndex - 1
+    );
+  };
+
+  const handleNext = () => {
+    setActiveIndex((prevIndex) =>
+      prevIndex === testimonials.length - 1 ? 0 : prevIndex + 1
+    );
+  };
+  return (
+    <section
+      id="delivery-section"
+      className="!py-20 flex flex-col items-center gap-12 bg-[var(--color-red)]/4"
+    >
+      <div>
+        <SectionHeading>
+          <span className="hidden sm:inline-block">Customer's</span>{" "}
+          Testimonials
+        </SectionHeading>
+        <SectionDescription>
+          Don't just take our word for it. Here's what pizza lovers have to say
+          about Pizza Delight.
+        </SectionDescription>
+      </div>
+      <div>
+        <div className="flex gap-12 justify-center items-center">
+          <TestimonialButton onClick={handlePrev} className="!hidden md:!flex">
+            <ArrowLeft strokeWidth={1} size={18} />
+          </TestimonialButton>
+          <TestimonialCard index={activeIndex} />
+          <TestimonialButton onClick={handleNext} className="!hidden md:!flex">
+            <ArrowRight strokeWidth={1} size={18} />
+          </TestimonialButton>
+        </div>
+        <div className="flex gap-6 justify-center !mt-10 md:hidden">
+          <TestimonialButton onClick={handlePrev}>
+            <ArrowLeft strokeWidth={1} size={18} />
+          </TestimonialButton>
+          <TestimonialButton onClick={handleNext}>
+            <ArrowRight strokeWidth={1} size={18} />
+          </TestimonialButton>
+        </div>
       </div>
     </section>
   );
