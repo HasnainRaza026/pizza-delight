@@ -1,5 +1,6 @@
 import { PhoneCall } from "lucide-react";
 import { PlacedProp } from "../types/PlacedPropType";
+import { phone } from "../data/restaurentInformation";
 
 function Phone({ placedOn }: PlacedProp) {
   let responsiveCSS: string = "";
@@ -14,7 +15,7 @@ function Phone({ placedOn }: PlacedProp) {
         </div>
         <div className="!pl-2.5 border-l-2">
           <p className="font-medium text-center">Call us now</p>
-          <p className="text-xs text-center">123-456-7890</p>
+          <p className="text-xs text-center">{phone}</p>
         </div>
       </div>
     </div>

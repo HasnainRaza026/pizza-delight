@@ -1,5 +1,11 @@
 import { Link } from "react-router-dom";
 import { Phone, Mail, MapPin } from "lucide-react";
+import {
+  address,
+  email,
+  openingHours,
+  phone,
+} from "../../data/restaurentInformation";
 
 function Footer() {
   return (
@@ -63,17 +69,15 @@ function Footer() {
             <ul className="!space-y-3">
               <li className="flex items-start">
                 <MapPin className="h-5 w-5 text-[var(--color-red)] !mr-2 !mt-0.5" />
-                <span className="text-gray-300">
-                  123 Pizza Street, Foodville, NYC 10001
-                </span>
+                <span className="text-gray-300">{address}</span>
               </li>
               <li className="flex items-center">
                 <Phone className="h-5 w-5 text-[var(--color-red)] !mr-2" />
-                <span className="text-gray-300">(555) 123-4567</span>
+                <span className="text-gray-300">{phone}</span>
               </li>
               <li className="flex items-center">
                 <Mail className="h-5 w-5 text-[var(--color-red)] !mr-2" />
-                <span className="text-gray-300">info@pizzadelight.com</span>
+                <span className="text-gray-300">{email}</span>
               </li>
             </ul>
           </div>
@@ -83,10 +87,12 @@ function Footer() {
             <h3 className="text-xl font-semibold !mb-4">Opening Hours</h3>
             <ul className="!space-y-2">
               <li className="text-gray-300">
-                Monday - Friday: 11:00 AM - 10:00 PM
+                Monday - Friday: {openingHours.mondayToFriday}
               </li>
-              <li className="text-gray-300">Saturday: 11:00 AM - 11:00 PM</li>
-              <li className="text-gray-300">Sunday: 12:00 PM - 9:00 PM</li>
+              <li className="text-gray-300">
+                Saturday: 1{openingHours.saturday}
+              </li>
+              <li className="text-gray-300">Sunday: {openingHours.sunday}</li>
             </ul>
           </div>
         </div>
