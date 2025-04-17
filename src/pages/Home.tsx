@@ -6,6 +6,7 @@ import DeliveryCard from "../ui/layout/DeliveryCard";
 import TestimonialCard from "../ui/layout/TestimonialCard";
 import { useState } from "react";
 import { testimonials } from "../data/testimonials";
+import { pizzaMenu } from "../data/pizzaMenu";
 
 const SectionHeading = styled.h2`
   font-family: var(--font-heading);
@@ -129,17 +130,16 @@ function MenuSection() {
       <SectionHeading>Checkout Our Menu</SectionHeading>
       <div className="!mx-auto max-w-[298px] md:max-w-[616px] lg:max-w-[934px]">
         <div className="grid grid-cols-1 gap-5 justify-items-center md:grid-cols-2 lg:grid-cols-3">
-          <PizzaMenuCard />
-          <PizzaMenuCard />
-          <PizzaMenuCard />
-          <PizzaMenuCard />
-          {/* Only shown on large screens */}
-          <div className="hidden lg:block">
-            <PizzaMenuCard />
-          </div>
-          <div className="hidden lg:block">
-            <PizzaMenuCard />
-          </div>
+          {pizzaMenu.map((pizza, i) =>
+            i < 4 ? (
+              <PizzaMenuCard key={pizza.id} pizza={pizza} />
+            ) : i > 3 && i < 6 ? (
+              <div className="hidden lg:block">
+                {/* Only shown on large screens */}
+                <PizzaMenuCard key={pizza.id} pizza={pizza} />
+              </div>
+            ) : null
+          )}
         </div>
       </div>
       <Button>View Full Menu</Button>

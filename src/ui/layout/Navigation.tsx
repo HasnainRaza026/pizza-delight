@@ -1,5 +1,5 @@
 import { NavLink } from "react-router";
-import { SidebarProps } from "../../types/PlacedProp";
+import { SidebarProps } from "../../types/PlacedPropType";
 
 function Navigation({ placedOn, setIsSidebarOpen }: SidebarProps) {
   let placedOnDirectionCSS: string = "";

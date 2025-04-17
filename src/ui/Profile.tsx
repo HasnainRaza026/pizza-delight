@@ -1,5 +1,5 @@
 import { UserRoundPlus } from "lucide-react";
-import { SidebarProps } from "../types/PlacedProp";
+import { SidebarProps } from "../types/PlacedPropType";
 
 function Profile({ placedOn, setIsSidebarOpen }: SidebarProps) {
   let placedOnCSS: string = "";
