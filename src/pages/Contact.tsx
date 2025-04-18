@@ -3,6 +3,7 @@ import Button from "../ui/Button";
 // import { Input } from "@/components/ui/input";
 // import { Textarea } from "@/components/ui/textarea";
 import { Check } from "lucide-react";
+import { Input, TextArea } from "../ui/InputField";
 // import { toast } from "sonner";
 
 function ContactPage() {
@@ -104,7 +105,7 @@ function MessageSection() {
   return (
     <section className="!py-16">
       <div className="container !mx-auto !px-4">
-        <div className="bg-white rounded-lg shadow-md !p-6">
+        <div className="md:w-2/3 lg:w-1/2 !mx-auto bg-white rounded-lg shadow-md !p-6">
           <h2 className="text-2xl font-bold !mb-6">Send Us a Message</h2>
 
           {isSubmitted ? (
@@ -133,7 +134,7 @@ function MessageSection() {
                 >
                   Subject *
                 </label>
-                <input
+                <Input
                   id="subject"
                   name="subject"
                   value={formData.subject}
@@ -154,7 +155,7 @@ function MessageSection() {
                 >
                   Message *
                 </label>
-                <textarea
+                <TextArea
                   id="message"
                   name="message"
                   rows={6}
