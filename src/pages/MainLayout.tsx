@@ -1,13 +1,16 @@
-import { Outlet } from "react-router";
+import { Outlet, useMatch } from "react-router-dom";
 import Header from "../ui/layout/Header";
 import Footer from "../ui/layout/Footer";
 
 function MainLayout() {
+  // this will match /menu, /menu/123, etc.
+  const isMenuRoute = useMatch({ path: "/menu/*", end: false });
+
   return (
     <>
-      <Header />
+      <Header type={isMenuRoute ? "withSearch" : "default"} />
       <Outlet />
-      <Footer />
+      {!isMenuRoute && <Footer />}
     </>
   );
 }

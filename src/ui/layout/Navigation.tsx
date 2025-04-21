@@ -1,12 +1,14 @@
-import { NavLink } from "react-router";
+import { NavLink, useLocation } from "react-router";
 import { SidebarProps } from "../../types/PlacedPropType";
 
 function Navigation({ placedOn, setIsSidebarOpen }: SidebarProps) {
+  const location = useLocation();
+
   let placedOnDirectionCSS: string = "";
   let placedOnDisplayCSS: string = "";
   if (placedOn === "header") {
     placedOnDirectionCSS = "flex-row gap-6";
-    placedOnDisplayCSS = "hidden md:block";
+    placedOnDisplayCSS = `hidden ${location.pathname === "/menu" ? "lg:block" : "md:block"}`;
   } else if (placedOn === "sidebar") {
     placedOnDirectionCSS = "flex-col gap-4";
     placedOnDisplayCSS = "block";

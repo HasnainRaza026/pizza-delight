@@ -1,6 +1,6 @@
 import { PhoneCall } from "lucide-react";
-import { PlacedProp } from "../types/PlacedPropType";
-import { phone } from "../data/restaurentInformation";
+import { PlacedProp } from "../../types/PlacedPropType";
+import { phone } from "../../data/restaurentInformation";
 
 function Phone({ placedOn }: PlacedProp) {
   let responsiveCSS: string = "";

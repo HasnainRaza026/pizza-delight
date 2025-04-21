@@ -9,9 +9,10 @@ type CardButtonProps = {
 
 type PizzaMenuCardProps = {
   pizza: PizzaData;
+  placedOn: string;
 };
 
-function PizzaMenuCard({ pizza }: PizzaMenuCardProps) {
+function PizzaMenuCard({ pizza, placedOn }: PizzaMenuCardProps) {
   const [fav, setFav] = useState(false); //temp state
   const [cart, setCart] = useState(false); //temp state
 
@@ -35,41 +36,46 @@ function PizzaMenuCard({ pizza }: PizzaMenuCardProps) {
           <h3 className="text-[var(--color-font-black)] font-bold text-lg truncate !mb-1.5">
             {pizza.name}
           </h3>
-          <p className="font-medium text-xs text-black/70 line-clamp-2">
+          <p
+            className={`font-medium text-xs text-black/70 ${placedOn === "menu" ? "line-clamp-3" : "line-clamp-2"}`}
+          >
             {pizza.description}
           </p>
         </div>
-        <div className="flex justify-between">
-          <p className="text-[#15B33F] font-bold">{`$${pizza.price}`}</p>
-          <div className="flex items-center gap-2.5">
-            {cart ? (
-              <div className="flex items-center gap-1.5">
-                <CardButton handleClick={setCart}>
-                  <Minus size={12} color={"white"} strokeWidth={2.5} />
-                </CardButton>
-                <p className="text-[var(--color-font-black)] text-sm font-(family-name:--font-default)">
-                  3
-                </p>
-                <CardButton handleClick={setCart}>
-                  <Plus size={12} color={"white"} strokeWidth={2.5} />
-                </CardButton>
-              </div>
-            ) : (
-              <CardButton handleClick={setCart}>
-                <ShoppingCart size={12} color={"white"} strokeWidth={2.5} />
-              </CardButton>
-            )}
 
-            <CardButton handleClick={setFav}>
-              <Heart
-                size={12}
-                color={"white"}
-                strokeWidth={2.5}
-                fill={fav ? "white" : "none"}
-              />
-            </CardButton>
+        {placedOn === "home" && (
+          <div className="flex justify-between">
+            <p className="text-[#15B33F] font-bold">{`$${pizza.price}`}</p>
+            <div className="flex items-center gap-2.5">
+              {cart ? (
+                <div className="flex items-center gap-1.5">
+                  <CardButton handleClick={setCart}>
+                    <Minus size={12} color={"white"} strokeWidth={2.5} />
+                  </CardButton>
+                  <p className="text-[var(--color-font-black)] text-sm font-(family-name:--font-default)">
+                    3
+                  </p>
+                  <CardButton handleClick={setCart}>
+                    <Plus size={12} color={"white"} strokeWidth={2.5} />
+                  </CardButton>
+                </div>
+              ) : (
+                <CardButton handleClick={setCart}>
+                  <ShoppingCart size={12} color={"white"} strokeWidth={2.5} />
+                </CardButton>
+              )}
+
+              <CardButton handleClick={setFav}>
+                <Heart
+                  size={12}
+                  color={"white"}
+                  strokeWidth={2.5}
+                  fill={fav ? "white" : "none"}
+                />
+              </CardButton>
+            </div>
           </div>
-        </div>
+        )}
       </div>
     </div>
   );

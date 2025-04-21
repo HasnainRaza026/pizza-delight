@@ -96,7 +96,7 @@ function HeroSection() {
       ></div>
       <div className="relative flex flex-col gap-12 justify-center items-center !px-7 !py-32 md:items-start">
         <div className="flex flex-col gap-6">
-          <h1 className="font-bold text-3xl sm:text-4xl md:text-5xl lg:text-6xl">
+          <h1 className="!text-white font-bold text-3xl sm:text-4xl md:text-5xl lg:text-6xl">
             Authentic Italian{" "}
             <span className="md:block">
               <span className="text-[var(--color-red)]">Pizzas</span> Delivered
@@ -132,11 +132,11 @@ function MenuSection() {
         <div className="grid grid-cols-1 gap-5 justify-items-center md:grid-cols-2 lg:grid-cols-3">
           {pizzaMenu.map((pizza, i) =>
             i < 4 ? (
-              <PizzaMenuCard key={pizza.id} pizza={pizza} />
+              <PizzaMenuCard key={pizza.id} pizza={pizza} placedOn="home" />
             ) : i > 3 && i < 6 ? (
-              <div className="hidden lg:block">
+              <div key={pizza.id} className="hidden lg:block">
                 {/* Only shown on large screens */}
-                <PizzaMenuCard key={pizza.id} pizza={pizza} />
+                <PizzaMenuCard pizza={pizza} placedOn="home" />
               </div>
             ) : null
           )}

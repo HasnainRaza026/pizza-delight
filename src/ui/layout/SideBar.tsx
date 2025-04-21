@@ -1,6 +1,5 @@
 import { X } from "lucide-react";
-import Phone from "../Phone";
-import Profile from "../Profile";
+import Phone from "./Phone";
 import Navigation from "./Navigation";
 import { useEffect, useRef } from "react";
 
@@ -45,7 +44,6 @@ function SideBar({ isSidebarOpen, setIsSidebarOpen }: SidebarToggleProp) {
       </div>
       <div className="flex justify-between items-center !mb-7">
         <Phone placedOn={"sidebar"} />
-        <Profile placedOn={"sidebar"} setIsSidebarOpen={setIsSidebarOpen} />
       </div>
       <Navigation placedOn={"sidebar"} setIsSidebarOpen={setIsSidebarOpen} />
     </div>

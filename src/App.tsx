@@ -6,6 +6,7 @@ import AboutPage from "./pages/AboutPage";
 import ContactPage from "./pages/ContactPage";
 import CartPage from "./pages/CartPage";
 import OrderConfirmationPage from "./pages/OrderConfirmationPage";
+import PizzaDetail from "./features/menu/PizzaDetail";
 
 const router = createBrowserRouter([
   {
@@ -19,6 +20,12 @@ const router = createBrowserRouter([
       {
         path: "menu",
         element: <MenuPage />,
+        children: [
+          {
+            path: ":id",
+            element: <PizzaDetail />,
+          },
+        ],
       },
       {
         path: "about",
