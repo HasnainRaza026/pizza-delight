@@ -1,25 +1,37 @@
 import * as React from "react";
 import { red } from "@mui/material/colors";
-import Radio from "@mui/material/Radio";
+import { Checkbox } from "@mui/material";
 
-export default function SelectSize() {
-  const [size, setSize] = React.useState("");
+export default function SelectTopping() {
+  const [topping, setTopping] = React.useState({
+    chicken: false,
+    tomatoes: false,
+    cheese: false,
+    onions: false,
+  });
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setSize(event.target.value);
+    const name = event.target.name;
+    if (name === "chicken")
+      setTopping((prev) => ({ ...prev, chicken: !prev.chicken }));
+    else if (name === "tomatoes")
+      setTopping((prev) => ({ ...prev, tomatoes: !prev.tomatoes }));
+    else if (name === "cheese")
+      setTopping((prev) => ({ ...prev, cheese: !prev.cheese }));
+    else if (name === "onions")
+      setTopping((prev) => ({ ...prev, onions: !prev.onions }));
   };
 
   return (
     <div>
-      <h2 className="text-xl font-bold !mb-2.5">Size</h2>
+      <h2 className="text-xl font-bold !mb-2.5">Extra Toppings</h2>
       <div className="flex flex-col font-(family-name:--font-default) text-black/70">
-        {/* Small Size */}
+        {/* Chicken Topping */}
         <div className="flex items-center">
-          <Radio
-            checked={size === "small"}
+          <Checkbox
+            checked={topping.chicken}
             onChange={handleChange}
-            value="small"
-            name="radio-buttons"
+            name="chicken"
             size="small"
             sx={{
               color: red[800],
@@ -29,18 +41,17 @@ export default function SelectSize() {
             }}
           />
           <div className="w-full flex justify-between items-center">
-            <p className="text-lg">Small (10")</p>
-            <p className="text-sm">-$2.00</p>
+            <p className="text-lg">Chicken</p>
+            <p className="text-sm">+$2.00</p>
           </div>
         </div>
 
-        {/* Meduim Size */}
+        {/* Tomatoes Topping */}
         <div className="flex items-center">
-          <Radio
-            checked={size === "medium"}
+          <Checkbox
+            checked={topping.tomatoes}
             onChange={handleChange}
-            value="medium"
-            name="radio-buttons"
+            name="tomatoes"
             size="small"
             sx={{
               color: red[800],
@@ -50,18 +61,17 @@ export default function SelectSize() {
             }}
           />
           <div className="w-full flex justify-between items-center">
-            <p className="text-lg">Medium (12")</p>
-            <p className="text-sm">Included</p>
+            <p className="text-lg">Tomatoes</p>
+            <p className="text-sm">+$0.75</p>
           </div>
         </div>
 
-        {/* Large Size */}
+        {/* Cheese Topping */}
         <div className="flex items-center">
-          <Radio
-            checked={size === "large"}
+          <Checkbox
+            checked={topping.cheese}
             onChange={handleChange}
-            value="large"
-            name="radio-buttons"
+            name="cheese"
             size="small"
             sx={{
               color: red[800],
@@ -71,18 +81,17 @@ export default function SelectSize() {
             }}
           />
           <div className="w-full flex justify-between items-center">
-            <p className="text-lg">Large (14")</p>
-            <p className="text-sm">+$3.00</p>
+            <p className="text-lg">Cheese</p>
+            <p className="text-sm">+$1.50</p>
           </div>
         </div>
 
-        {/* X-Large Size */}
+        {/* Onions Topping */}
         <div className="flex items-center">
-          <Radio
-            checked={size === "x-large"}
+          <Checkbox
+            checked={topping.onions}
             onChange={handleChange}
-            value="x-large"
-            name="radio-buttons"
+            name="onions"
             size="small"
             sx={{
               color: red[800],
@@ -92,8 +101,8 @@ export default function SelectSize() {
             }}
           />
           <div className="w-full flex justify-between items-center">
-            <p className="text-lg">X-Large (14")</p>
-            <p className="text-sm">+$5.00</p>
+            <p className="text-lg">Onions</p>
+            <p className="text-sm">+$0.75</p>
           </div>
         </div>
       </div>
