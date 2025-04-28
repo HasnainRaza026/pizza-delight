@@ -25,7 +25,7 @@ export default function SelectTopping() {
   return (
     <div>
       <h2 className="text-xl font-bold !mb-2.5">Extra Toppings</h2>
-      <div className="flex flex-col font-(family-name:--font-default) text-black/70">
+      <div className="flex flex-col font-(family-name:--font-default) text-black/70 lg:grid lg:grid-cols-2 lg:gap-x-15">
         {/* Chicken Topping */}
         <div className="flex items-center">
           <Checkbox

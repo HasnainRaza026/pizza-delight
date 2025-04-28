@@ -5,9 +5,10 @@ import { useMenu } from "./MenuContext";
 
 function Menu() {
   const { isPizzaDetailModalOpen, toggleModal } = useMenu();
+  console.log(isPizzaDetailModalOpen);
   return (
-    <>
-      <div className="overflow-scroll flex flex-col items-center gap-6 !pt-7">
+    <div className="flex justify-center !pt-7">
+      <div className="flex flex-col items-center gap-6 !px-2.5 md:!px-5 lg:!px-10">
         {pizzaMenu.map((pizza) => (
           <div key={pizza.id} onClick={toggleModal}>
             <PizzaMenuCard pizza={pizza} placedOn="menu" />
@@ -15,10 +16,8 @@ function Menu() {
         ))}
       </div>
 
-      <div className="block sm:hidden">
-        {isPizzaDetailModalOpen && <Outlet />}
-      </div>
-    </>
+      {isPizzaDetailModalOpen && <Outlet />}
+    </div>
   );
 }
 

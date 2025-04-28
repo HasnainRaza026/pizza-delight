@@ -12,7 +12,7 @@ export default function SelectSize() {
   return (
     <div>
       <h2 className="text-xl font-bold !mb-2.5">Size</h2>
-      <div className="flex flex-col font-(family-name:--font-default) text-black/70">
+      <div className="flex flex-col font-(family-name:--font-default) text-black/70 lg:grid lg:grid-cols-2 lg:gap-x-15">
         {/* Small Size */}
         <div className="flex items-center">
           <Radio
