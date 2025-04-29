@@ -7,6 +7,7 @@ import ContactPage from "./pages/ContactPage";
 import CartPage from "./pages/CartPage";
 import OrderConfirmationPage from "./pages/OrderConfirmationPage";
 import PizzaDetail from "./features/menu/PizzaDetail";
+import CheckoutPage from "./pages/CheckoutPage";
 
 const router = createBrowserRouter([
   {
@@ -42,6 +43,10 @@ const router = createBrowserRouter([
       {
         path: "order-confirmation",
         element: <OrderConfirmationPage />,
+      },
+      {
+        path: "checkout",
+        element: <CheckoutPage />,
       },
     ],
   },
