@@ -18,7 +18,7 @@ function Header({ type }: HeaderProps) {
 
   return (
     <>
-      <header className="sticky z-10 top-0 bg-white/90 backdrop-blur-md shadow-sm w-full flex justify-between items-center !p-2.5 sm:!px-5 sm:!py-2.5">
+      <header className="sticky z-20 top-0 bg-white/90 backdrop-blur-md shadow-sm w-full flex justify-between items-center !p-2.5 sm:!px-5 sm:!py-2.5">
         {/* Logo */}
         <Link
           to="/"
@@ -39,10 +39,12 @@ function Header({ type }: HeaderProps) {
           <div
             className={`${type === headerOnMenuPage ? "hidden sm:block" : ""} hover:bg-[var(--color-hover)] !p-2 !mt-2 rounded-lg cursor-pointer`}
           >
-            <ShoppingCart className="absolute" />
-            <div className="font-(family-name:--font-default) text-[10px] text-white rounded-full bg-[var(--color-red)] !px-1.5 !py-0.5 text-center relative -top-3.5 -right-4 md:text-xs md:!px-2 md:!py-1 md:-top-4">
-              3
-            </div>
+            <Link to="/cart">
+              <ShoppingCart className="absolute" />
+              <div className="font-(family-name:--font-default) text-[10px] text-white rounded-full bg-[var(--color-red)] !px-1.5 !py-0.5 text-center relative -top-3.5 -right-4 md:text-xs md:!px-2 md:!py-1 md:-top-4">
+                3
+              </div>
+            </Link>
           </div>
           {/* Hamburger */}
           <div

@@ -1,8 +1,13 @@
 import { NavLink, useLocation } from "react-router";
 import { SidebarProps } from "../../types/PlacedPropType";
+import { useDispatch } from "react-redux";
+import { useFetchMenu } from "../../hooks/useFetchMenu";
+import { updateActivePizzaDetail } from "../../features/menu/menuSlice";
 
 function Navigation({ placedOn, setIsSidebarOpen }: SidebarProps) {
   const location = useLocation();
+  const dispatch = useDispatch();
+  const { menu } = useFetchMenu();
 
   let placedOnDirectionCSS: string = "";
   let placedOnDisplayCSS: string = "";
@@ -22,8 +27,21 @@ function Navigation({ placedOn, setIsSidebarOpen }: SidebarProps) {
             Home
           </NavLink>
         </li>
-        <li className="text-lg font-medium cursor-pointer hover:text-[var(--color-tomato)]">
+        {/* For Mobile */}
+        <li className="text-lg font-medium cursor-pointer hover:text-[var(--color-tomato)] block sm:hidden">
           <NavLink to="/menu" onClick={() => setIsSidebarOpen(false)}>
+            Menu
+          </NavLink>
+        </li>
+        {/* For Large Sreens */}
+        <li className="text-lg font-medium cursor-pointer hover:text-[var(--color-tomato)] hidden sm:block">
+          <NavLink
+            to="/menu/1"
+            onClick={() => {
+              dispatch(updateActivePizzaDetail(menu[0]));
+              setIsSidebarOpen(false);
+            }}
+          >
             Menu
           </NavLink>
         </li>

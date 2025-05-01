@@ -28,7 +28,9 @@ function HeroSection() {
         }}
       ></div>
       <div className="container !mx-auto !px-4 !py-20 relative z-10 text-center">
-        <h1 className="text-4xl md:text-5xl font-bold !mb-4">Contact Us</h1>
+        <h1 className="text-4xl md:text-5xl font-bold !mb-4 !text-white">
+          Contact Us
+        </h1>
         <div className="w-20 h-1 bg-[var(--color-red)] !mx-auto !mb-6"></div>
         <p className="text-xl max-w-2xl !mx-auto">
           Have a question or feedback? We'd love to hear from you!

@@ -1,22 +1,26 @@
 import { Outlet } from "react-router";
-import { pizzaMenu } from "../../data/pizzaMenu";
 import PizzaMenuCard from "../../ui/layout/PizzaMenuCard";
-import { useMenu } from "./MenuContext";
+import { useFetchMenu } from "../../hooks/useFetchMenu";
+import PageLoader from "../../ui/layout/PageLoader";
+import { PizzaData } from "../../types/PizzaDataType";
 
 function Menu() {
-  const { isPizzaDetailModalOpen, toggleModal } = useMenu();
-  console.log(isPizzaDetailModalOpen);
+  const { menu, error, isPending } = useFetchMenu();
+
+  if (isPending) return <PageLoader />;
+  if (error) return <h1>Error...!</h1>;
+
   return (
     <div className="flex justify-center !pt-7">
-      <div className="flex flex-col items-center gap-6 !px-2.5 md:!px-5 lg:!px-10">
-        {pizzaMenu.map((pizza) => (
-          <div key={pizza.id} onClick={toggleModal}>
+      <div className="flex flex-col items-center gap-6 select-none !px-2.5 md:!px-5 lg:!px-10">
+        {menu.map((pizza: PizzaData) => (
+          <div key={pizza.id}>
             <PizzaMenuCard pizza={pizza} placedOn="menu" />
           </div>
         ))}
       </div>
 
-      {isPizzaDetailModalOpen && <Outlet />}
+      <Outlet />
     </div>
   );
 }

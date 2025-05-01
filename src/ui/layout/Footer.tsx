@@ -6,8 +6,14 @@ import {
   openingHours,
   phone,
 } from "../../data/restaurentInformation";
+import { updateActivePizzaDetail } from "../../features/menu/menuSlice";
+import { useDispatch } from "react-redux";
+import { useFetchMenu } from "../../hooks/useFetchMenu";
 
 function Footer() {
+  const dispatch = useDispatch();
+  const { menu } = useFetchMenu();
+
   return (
     <footer className="bg-[var(--color-font-black)] text-white !pt-12 !pb-6">
       <div className="container !mx-auto !px-4">
@@ -36,12 +42,19 @@ function Footer() {
                   Home
                 </Link>
               </li>
-              <li>
+              {/* For Mobile */}
+              <li className="text-gray-300 hover:text-[var(--color-red)] transition-colors block sm:hidden">
+                <Link to="/menu">Menu</Link>
+              </li>
+              {/* For Large Sreens */}
+              <li className="text-gray-300 hover:text-[var(--color-red)] transition-colors hidden sm:block">
                 <Link
-                  to="/menu"
-                  className="text-gray-300 hover:text-[var(--color-red)] transition-colors"
+                  to="/menu/1"
+                  onClick={() => {
+                    dispatch(updateActivePizzaDetail(menu[0]));
+                  }}
                 >
-                  Our Menu
+                  Menu
                 </Link>
               </li>
               <li>

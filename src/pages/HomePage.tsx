@@ -6,7 +6,12 @@ import DeliveryCard from "../ui/layout/DeliveryCard";
 import TestimonialCard from "../ui/layout/TestimonialCard";
 import { useState } from "react";
 import { testimonials } from "../data/testimonials";
-import { pizzaMenu } from "../data/pizzaMenu";
+import { PizzaData } from "../types/PizzaDataType";
+import PageLoader from "../ui/layout/PageLoader";
+import { useFetchMenu } from "../hooks/useFetchMenu";
+import { useNavigate } from "react-router";
+import { useDispatch } from "react-redux";
+import { updateActivePizzaDetail } from "../features/menu/menuSlice";
 
 const SectionHeading = styled.h2`
   font-family: var(--font-heading);
@@ -82,6 +87,16 @@ function HomePage() {
 }
 
 function HeroSection() {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const { menu } = useFetchMenu();
+
+  const handleOrderNow = (screen: string) => {
+    dispatch(updateActivePizzaDetail(menu[0]));
+    if (screen === "mobile") navigate("/menu");
+    else if (screen === "notMobile") navigate("/menu/1");
+  };
+
   return (
     <section
       id="hero-section"
@@ -112,16 +127,33 @@ function HeroSection() {
             </span>
           </p>
         </div>
-        <Button>
-          Order Now
-          <ArrowRight size={20} />
-        </Button>
+        {/* For Mobile */}
+        <div className="sm:hidden">
+          <Button onClick={() => handleOrderNow("mobile")}>
+            Order Now
+            <ArrowRight size={20} />
+          </Button>
+        </div>
+        {/* For Large Sreens */}
+        <div className="hidden sm:flex">
+          <Button onClick={() => handleOrderNow("notMobile")}>
+            Order Now
+            <ArrowRight size={20} />
+          </Button>
+        </div>
       </div>
     </section>
   );
 }
 
 function MenuSection() {
+  const { menu, error, isPending } = useFetchMenu();
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+
+  if (isPending) return <PageLoader />;
+  if (error) return <h1>Error...!</h1>;
+
   return (
     <section
       id="menu-section"
@@ -130,7 +162,7 @@ function MenuSection() {
       <SectionHeading>Checkout Our Menu</SectionHeading>
       <div className="!mx-auto max-w-[298px] md:max-w-[616px] lg:max-w-[934px]">
         <div className="grid grid-cols-1 gap-5 justify-items-center md:grid-cols-2 lg:grid-cols-3">
-          {pizzaMenu.map((pizza, i) =>
+          {menu.map((pizza: PizzaData, i: number) =>
             i < 4 ? (
               <PizzaMenuCard key={pizza.id} pizza={pizza} placedOn="home" />
             ) : i > 3 && i < 6 ? (
@@ -142,7 +174,23 @@ function MenuSection() {
           )}
         </div>
       </div>
-      <Button>View Full Menu</Button>
+      {/* For Mobile */}
+      <div className="block sm:hidden">
+        <Button onClick={() => navigate("/menu")}>View Full Menu</Button>
+      </div>
+
+      {/* For Large Screens */}
+      <div className="hidden sm:block">
+        <Button
+          className="hidden sm:block"
+          onClick={() => {
+            dispatch(updateActivePizzaDetail(menu[0]));
+            navigate("/menu/1");
+          }}
+        >
+          View Full Menu
+        </Button>
+      </div>
     </section>
   );
 }

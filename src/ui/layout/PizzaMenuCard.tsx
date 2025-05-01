@@ -1,6 +1,9 @@
 import { Heart, Minus, Plus, ShoppingCart } from "lucide-react";
 import React, { useState } from "react";
 import { PizzaData } from "../../types/PizzaDataType";
+import { useNavigate } from "react-router";
+import { useDispatch } from "react-redux";
+import { updateActivePizzaDetail } from "../../features/menu/menuSlice";
 
 type CardButtonProps = {
   children: React.ReactNode;
@@ -15,13 +18,21 @@ type PizzaMenuCardProps = {
 function PizzaMenuCard({ pizza, placedOn }: PizzaMenuCardProps) {
   const [fav, setFav] = useState(false); //temp state
   const [cart, setCart] = useState(false); //temp state
-
   const [isHovered, seteIsHovered] = useState<boolean>(false);
+
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  const handleOnClick = () => {
+    dispatch(updateActivePizzaDetail(pizza));
+    navigate(`/menu/${pizza.id}`);
+  };
 
   return (
     <div
       onMouseEnter={() => seteIsHovered(true)}
       onMouseLeave={() => seteIsHovered(false)}
+      onClick={handleOnClick}
       className="w-[298px] h-[116px] bg-white rounded-lg flex items-center gap-4 !p-2.5 shadow-md cursor-pointer transition-transform duration-300 hover:shadow-lg hover:-translate-y-1"
     >
       <div className="w-24 h-24 rounded-lg overflow-hidden">
