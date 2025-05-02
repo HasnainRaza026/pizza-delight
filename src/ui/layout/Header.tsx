@@ -3,8 +3,12 @@ import { ShoppingCart, Menu } from "lucide-react";
 import Navigation from "./Navigation";
 import Phone from "./Phone";
 import SideBar from "./SideBar";
-import { useState } from "react";
+import { FormEvent, useState } from "react";
 import SearchBar from "../SearchBar";
+import { useFetchMenu } from "../../hooks/useFetchMenu";
+import { PizzaData } from "../../types/PizzaDataType";
+import { useDispatch } from "react-redux";
+import { updateActivePizzaDetail } from "../../features/menu/menuSlice";
 
 type HeaderProps = {
   type: string;
@@ -12,6 +16,20 @@ type HeaderProps = {
 
 function Header({ type }: HeaderProps) {
   const [isSidebarOpen, setIsSidebarOpen] = useState<boolean>(false);
+  const [inputSeach, setInputSerach] = useState("");
+
+  const { menu } = useFetchMenu();
+  const dispatch = useDispatch();
+
+  const handleSubmit = (e: FormEvent) => {
+    e.preventDefault();
+    if (!inputSeach) return;
+    const searchedPizza = menu.find(
+      (pizza: PizzaData) =>
+        pizza.name.toLocaleLowerCase() === inputSeach.toLocaleLowerCase()
+    );
+    if (searchedPizza) dispatch(updateActivePizzaDetail(searchedPizza));
+  };
 
   const headerOnMenuPage = "withSearch";
   const headerOnOtherPage = "default";
@@ -27,9 +45,20 @@ function Header({ type }: HeaderProps) {
           <span className="text-[var(--color-red)]">Pizza</span>
           <span className="text-[var(--color-olive)]">Delight</span>
         </Link>
+
+        {/* Navigation */}
         <Navigation placedOn={"header"} setIsSidebarOpen={setIsSidebarOpen} />
 
-        {type === headerOnMenuPage && <SearchBar placeholder="Search" />}
+        {/* Search-Bar */}
+        {type === headerOnMenuPage && (
+          <form onSubmit={(e) => handleSubmit(e)}>
+            <SearchBar
+              placeholder="Search"
+              value={inputSeach}
+              onChange={(e) => setInputSerach(e.target.value)}
+            />
+          </form>
+        )}
 
         <div className="flex items-center gap-6 sm:gap-10">
           {/* Phone Number */}
