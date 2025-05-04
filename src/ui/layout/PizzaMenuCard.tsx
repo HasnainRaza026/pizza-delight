@@ -2,8 +2,9 @@ import { Heart, Minus, Plus, ShoppingCart } from "lucide-react";
 import React, { useState } from "react";
 import { PizzaData } from "../../types/PizzaDataType";
 import { useNavigate } from "react-router";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { updateActivePizzaDetail } from "../../features/menu/menuSlice";
+import scrollToTop from "../../utils/scrollToTop";
 
 type CardButtonProps = {
   children: React.ReactNode;
@@ -20,12 +21,19 @@ function PizzaMenuCard({ pizza, placedOn }: PizzaMenuCardProps) {
   const [cart, setCart] = useState(false); //temp state
   const [isHovered, seteIsHovered] = useState<boolean>(false);
 
+  const { id } = useSelector((state: any) => ({
+    id: state.menu.ActivePizzaDetail.id,
+  }));
+
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
   const handleOnClick = () => {
-    dispatch(updateActivePizzaDetail(pizza));
+    dispatch(
+      updateActivePizzaDetail({ ...pizza, size: "", toppings: [], quantity: 1 })
+    );
     navigate(`/menu/${pizza.id}`);
+    scrollToTop()
   };
 
   return (
@@ -33,7 +41,7 @@ function PizzaMenuCard({ pizza, placedOn }: PizzaMenuCardProps) {
       onMouseEnter={() => seteIsHovered(true)}
       onMouseLeave={() => seteIsHovered(false)}
       onClick={handleOnClick}
-      className="w-[298px] h-[116px] bg-white rounded-lg flex items-center gap-4 !p-2.5 shadow-md cursor-pointer transition-transform duration-300 hover:shadow-lg hover:-translate-y-1"
+      className={`w-[298px] h-[116px] bg-white rounded-lg flex items-center gap-4 !p-2.5 shadow-md cursor-pointer transition-transform duration-300 hover:shadow-lg hover:-translate-y-1 ${id === pizza.id ? "border-l-12" : "border-l-4"} border-[var(--color-red)] border`}
     >
       <div className="w-24 h-24 rounded-lg overflow-hidden">
         <img

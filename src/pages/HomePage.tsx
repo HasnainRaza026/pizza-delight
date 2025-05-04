@@ -92,7 +92,14 @@ function HeroSection() {
   const { menu } = useFetchMenu();
 
   const handleOrderNow = (screen: string) => {
-    dispatch(updateActivePizzaDetail(menu[0]));
+    dispatch(
+      updateActivePizzaDetail({
+        ...menu[0],
+        size: "",
+        toppings: [],
+        quantity: 1,
+      })
+    );
     if (screen === "mobile") navigate("/menu");
     else if (screen === "notMobile") navigate("/menu/1");
   };
@@ -184,7 +191,14 @@ function MenuSection() {
         <Button
           className="hidden sm:block"
           onClick={() => {
-            dispatch(updateActivePizzaDetail(menu[0]));
+            dispatch(
+              updateActivePizzaDetail({
+                ...menu[0],
+                size: "",
+                toppings: [],
+                quantity: 1,
+              })
+            );
             navigate("/menu/1");
           }}
         >

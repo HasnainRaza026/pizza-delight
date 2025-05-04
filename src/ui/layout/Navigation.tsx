@@ -38,7 +38,14 @@ function Navigation({ placedOn, setIsSidebarOpen }: SidebarProps) {
           <NavLink
             to="/menu/1"
             onClick={() => {
-              dispatch(updateActivePizzaDetail(menu[0]));
+              dispatch(
+                updateActivePizzaDetail({
+                  ...menu[0],
+                  size: "",
+                  toppings: [],
+                  quantity: 1,
+                })
+              );
               setIsSidebarOpen(false);
             }}
           >

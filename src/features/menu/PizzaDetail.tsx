@@ -20,7 +20,7 @@ function PizzaDetail() {
 
       {/* For sm to lg Screens */}
       <div className="hidden sm:block">
-        <div className=" w-[292px] h-auto bg-[#b9b9b9]/6 rounded-2xl !p-5 flex flex-col gap-7 shadow-2xl md:w-[428px] lg:w-[560px]">
+        <div className=" w-[292px] h-auto bg-[#b9b9b9]/6 rounded-2xl !p-5 flex flex-col gap-7 shadow-2xl border-t-14 border-[var(--color-red)] md:w-[428px] lg:w-[560px]">
           <PizzaImage />
           <TitleAndDescription />
           <SelectSize />

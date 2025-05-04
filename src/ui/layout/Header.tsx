@@ -1,5 +1,5 @@
 import { Link } from "react-router";
-import { ShoppingCart, Menu } from "lucide-react";
+import { Menu } from "lucide-react";
 import Navigation from "./Navigation";
 import Phone from "./Phone";
 import SideBar from "./SideBar";
@@ -9,13 +9,14 @@ import { useFetchMenu } from "../../hooks/useFetchMenu";
 import { PizzaData } from "../../types/PizzaDataType";
 import { useDispatch } from "react-redux";
 import { updateActivePizzaDetail } from "../../features/menu/menuSlice";
+import CartIcon from "./CartIcon";
 
 type HeaderProps = {
   type: string;
 };
 
 function Header({ type }: HeaderProps) {
-  const [isSidebarOpen, setIsSidebarOpen] = useState<boolean>(false);
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [inputSeach, setInputSerach] = useState("");
 
   const { menu } = useFetchMenu();
@@ -28,7 +29,10 @@ function Header({ type }: HeaderProps) {
       (pizza: PizzaData) =>
         pizza.name.toLocaleLowerCase() === inputSeach.toLocaleLowerCase()
     );
-    if (searchedPizza) dispatch(updateActivePizzaDetail(searchedPizza));
+    if (searchedPizza)
+      dispatch(
+        updateActivePizzaDetail({ ...searchedPizza, size: "", toppings: [] })
+      );
   };
 
   const headerOnMenuPage = "withSearch";
@@ -65,16 +69,8 @@ function Header({ type }: HeaderProps) {
           {type === headerOnOtherPage && <Phone placedOn={"header"} />}
 
           {/* Cart */}
-          <div
-            className={`${type === headerOnMenuPage ? "hidden sm:block" : ""} hover:bg-[var(--color-hover)] !p-2 !mt-2 rounded-lg cursor-pointer`}
-          >
-            <Link to="/cart">
-              <ShoppingCart className="absolute" />
-              <div className="font-(family-name:--font-default) text-[10px] text-white rounded-full bg-[var(--color-red)] !px-1.5 !py-0.5 text-center relative -top-3.5 -right-4 md:text-xs md:!px-2 md:!py-1 md:-top-4">
-                3
-              </div>
-            </Link>
-          </div>
+          <CartIcon type={type} headerOnMenuPage={headerOnMenuPage} />
+
           {/* Hamburger */}
           <div
             className="md:hidden hover:bg-[var(--color-hover)] !p-2 rounded-lg cursor-pointer sm:!-ml-3"
