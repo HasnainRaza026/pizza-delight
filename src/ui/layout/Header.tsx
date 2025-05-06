@@ -10,6 +10,7 @@ import { PizzaData } from "../../types/PizzaDataType";
 import { useDispatch } from "react-redux";
 import { updateActivePizzaDetail } from "../../features/menu/menuSlice";
 import CartIcon from "./CartIcon";
+import { errorToast } from "../../utils/toastFunctions";
 
 type HeaderProps = {
   type: string;
@@ -33,6 +34,7 @@ function Header({ type }: HeaderProps) {
       dispatch(
         updateActivePizzaDetail({ ...searchedPizza, size: "", toppings: [] })
       );
+    else errorToast("Couldn't find pizza");
   };
 
   const headerOnMenuPage = "withSearch";

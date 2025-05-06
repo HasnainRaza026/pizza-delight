@@ -1,6 +1,13 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { CartItemType } from "../../types/CartItemType";
 
-const initialState = {
+type StateType = {
+  ActivePizzaDetail: CartItemType & {
+    description: string;
+  };
+};
+
+const initialState: StateType = {
   ActivePizzaDetail: {
     id: 0,
     name: "",

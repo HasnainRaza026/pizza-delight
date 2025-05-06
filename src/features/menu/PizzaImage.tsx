@@ -1,10 +1,13 @@
 import { X } from "lucide-react";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router";
+import { RootState } from "../../store";
 
 function PizzaImage() {
   const navigate = useNavigate();
-  const image = useSelector((state) => state.menu.ActivePizzaDetail.image);
+  const image = useSelector(
+    (state: RootState) => state.menu.ActivePizzaDetail.image
+  );
   return (
     <div className="relative">
       <img

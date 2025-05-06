@@ -2,13 +2,14 @@ import { Minus, Plus } from "lucide-react";
 import Button from "../../ui/Button";
 import { useDispatch, useSelector } from "react-redux";
 import { addToCart } from "../cart/cartSlice";
-import toast from "react-hot-toast";
 import { sizeOptions, toppingOptions } from "./options";
 import { decrementQuatity, incrementQuatity } from "./menuSlice";
+import { iconToast, successToast } from "../../utils/toastFunctions";
+import { RootState } from "../../store";
 
 function AddToCart() {
   const dispatch = useDispatch();
-  const { ActivePizzaDetail } = useSelector((state: any) => ({
+  const { ActivePizzaDetail } = useSelector((state: RootState) => ({
     ActivePizzaDetail: state.menu.ActivePizzaDetail,
   }));
 
@@ -37,9 +38,7 @@ function AddToCart() {
 
   const handleAddToCart = () => {
     if (!ActivePizzaDetail.size) {
-      toast("Please select the size", {
-        icon: "🛈",
-      });
+      iconToast("Please select the size", "🛈");
       return;
     }
     dispatch(
@@ -53,7 +52,7 @@ function AddToCart() {
         quantity: ActivePizzaDetail.quantity,
       })
     );
-    toast.success(`${ActivePizzaDetail.name} added to cart`);
+    successToast(`${ActivePizzaDetail.name} added to cart`);
   };
 
   return (

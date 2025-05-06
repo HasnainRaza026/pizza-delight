@@ -1,15 +1,20 @@
-import { Heart, Minus, Plus, ShoppingCart } from "lucide-react";
-import React, { useState } from "react";
+import { Minus, Plus, ShoppingCart } from "lucide-react";
+import { useState } from "react";
 import { PizzaData } from "../../types/PizzaDataType";
 import { useNavigate } from "react-router";
 import { useDispatch, useSelector } from "react-redux";
 import { updateActivePizzaDetail } from "../../features/menu/menuSlice";
 import scrollToTop from "../../utils/scrollToTop";
-
-type CardButtonProps = {
-  children: React.ReactNode;
-  handleClick: any;
-};
+import { CartItemType } from "../../types/CartItemType";
+import {
+  addToCart,
+  decrementQuantity,
+  incrementQuantity,
+} from "../../features/cart/cartSlice";
+import { successToast } from "../../utils/toastFunctions";
+import { RootState } from "../../store";
+import CardButton from "../CardButton";
+import FavouriteButton from "../../features/favourite/FavouriteButton";
 
 type PizzaMenuCardProps = {
   pizza: PizzaData;
@@ -17,12 +22,11 @@ type PizzaMenuCardProps = {
 };
 
 function PizzaMenuCard({ pizza, placedOn }: PizzaMenuCardProps) {
-  const [fav, setFav] = useState(false); //temp state
-  const [cart, setCart] = useState(false); //temp state
   const [isHovered, seteIsHovered] = useState<boolean>(false);
 
-  const { id } = useSelector((state: any) => ({
+  const { id, cartItems } = useSelector((state: RootState) => ({
     id: state.menu.ActivePizzaDetail.id,
+    cartItems: state.cart.cartItems,
   }));
 
   const dispatch = useDispatch();
@@ -33,7 +37,32 @@ function PizzaMenuCard({ pizza, placedOn }: PizzaMenuCardProps) {
       updateActivePizzaDetail({ ...pizza, size: "", toppings: [], quantity: 1 })
     );
     navigate(`/menu/${pizza.id}`);
-    scrollToTop()
+    scrollToTop();
+  };
+
+  const isPizzaInCart = (id: number) => {
+    // returns true as soon as it finds a matching id in cartItems
+    return cartItems.some((item: CartItemType) => item.id === id);
+  };
+
+  const getPizzaQuantityInCart = (id: number) => {
+    const pizza = cartItems.filter((item: CartItemType) => item.id === id);
+    return pizza[0].quantity;
+  };
+
+  const handleAddToCart = (pizza: PizzaData) => {
+    dispatch(
+      addToCart({
+        id: pizza.id,
+        image: pizza.image,
+        name: pizza.name,
+        price: pizza.price,
+        size: "medium",
+        toppings: [],
+        quantity: 1,
+      })
+    );
+    successToast(`${pizza.name} added to cart`);
   };
 
   return (
@@ -41,7 +70,7 @@ function PizzaMenuCard({ pizza, placedOn }: PizzaMenuCardProps) {
       onMouseEnter={() => seteIsHovered(true)}
       onMouseLeave={() => seteIsHovered(false)}
       onClick={handleOnClick}
-      className={`w-[298px] h-[116px] bg-white rounded-lg flex items-center gap-4 !p-2.5 shadow-md cursor-pointer transition-transform duration-300 hover:shadow-lg hover:-translate-y-1 ${id === pizza.id ? "border-l-12" : "border-l-4"} border-[var(--color-red)] border`}
+      className={`w-[298px] h-[116px] bg-white rounded-lg flex items-center gap-4 !p-2.5 shadow-md cursor-pointer transition-transform duration-300 hover:shadow-lg hover:-translate-y-1 ${id === pizza.id ? "border-l-8" : "border-l-4"} border-[var(--color-red)] border`}
     >
       <div className="w-24 h-24 rounded-lg overflow-hidden">
         <img
@@ -66,48 +95,47 @@ function PizzaMenuCard({ pizza, placedOn }: PizzaMenuCardProps) {
           <div className="flex justify-between">
             <p className="text-[#15B33F] font-bold">{`$${pizza.price}`}</p>
             <div className="flex items-center gap-2.5">
-              {cart ? (
+              {isPizzaInCart(pizza.id) ? (
                 <div className="flex items-center gap-1.5">
-                  <CardButton handleClick={setCart}>
+                  <CardButton
+                    onClick={(e) => {
+                      e.stopPropagation(); // ← prevent bubbling
+                      dispatch(decrementQuantity(pizza.id));
+                      successToast(`${pizza.name} removed successfully`);
+                    }}
+                  >
                     <Minus size={12} color={"white"} strokeWidth={2.5} />
                   </CardButton>
                   <p className="text-[var(--color-font-black)] text-sm font-(family-name:--font-default)">
-                    3
+                    {getPizzaQuantityInCart(pizza.id)}
                   </p>
-                  <CardButton handleClick={setCart}>
+                  <CardButton
+                    onClick={(e) => {
+                      e.stopPropagation(); // ← prevent bubbling
+                      dispatch(incrementQuantity(pizza.id));
+                      successToast(`${pizza.name} added successfully`);
+                    }}
+                  >
                     <Plus size={12} color={"white"} strokeWidth={2.5} />
                   </CardButton>
                 </div>
               ) : (
-                <CardButton handleClick={setCart}>
+                <CardButton
+                  onClick={(e) => {
+                    e.stopPropagation(); // ← prevent bubbling
+                    handleAddToCart(pizza);
+                  }}
+                >
                   <ShoppingCart size={12} color={"white"} strokeWidth={2.5} />
                 </CardButton>
               )}
 
-              <CardButton handleClick={setFav}>
-                <Heart
-                  size={12}
-                  color={"white"}
-                  strokeWidth={2.5}
-                  fill={fav ? "white" : "none"}
-                />
-              </CardButton>
+              <FavouriteButton id={pizza.id} placedOn="home" />
             </div>
           </div>
         )}
       </div>
     </div>
-  );
-}
-
-function CardButton({ children, handleClick }: CardButtonProps) {
-  return (
-    <button
-      onClick={() => handleClick((prev) => !prev)}
-      className="w-[22px] h-[22px] flex justify-center items-center bg-[var(--color-red)] rounded-full hover:bg-[var(--color-tomato)]"
-    >
-      {children}
-    </button>
   );
 }
 
