@@ -14,20 +14,17 @@ function AddToCart() {
   }));
 
   const getSizePrice = () => {
-    let sizePrice = 0;
-    const _ = sizeOptions.map((item) => {
-      if (item.key === ActivePizzaDetail.size) sizePrice = item.price;
-    });
-    return sizePrice;
+    return (
+      sizeOptions.find((o) => o.key === ActivePizzaDetail.size)?.price ?? 0
+    );
   };
 
   const getToppingsPrice = () => {
-    let toppingsPrice = 0;
-    const _ = toppingOptions.map((item) => {
-      if (ActivePizzaDetail.toppings.includes(item.key))
-        toppingsPrice += item.price;
-    });
-    return toppingsPrice;
+    return toppingOptions.reduce(
+      (sum, o) =>
+        ActivePizzaDetail.toppings.includes(o.key) ? sum + o.price : sum,
+      0
+    );
   };
 
   const totalPrice = (
@@ -38,7 +35,7 @@ function AddToCart() {
 
   const handleAddToCart = () => {
     if (!ActivePizzaDetail.size) {
-      iconToast("Please select the size", "🛈");
+      iconToast("Please select the size", "⛔");
       return;
     }
     dispatch(
@@ -46,10 +43,11 @@ function AddToCart() {
         id: ActivePizzaDetail.id,
         name: ActivePizzaDetail.name,
         image: ActivePizzaDetail.image,
-        price: ActivePizzaDetail.price,
+        price: Number(totalPrice),
         size: ActivePizzaDetail.size,
         toppings: ActivePizzaDetail.toppings,
         quantity: ActivePizzaDetail.quantity,
+        basePrice: ActivePizzaDetail.price,
       })
     );
     successToast(`${ActivePizzaDetail.name} added to cart`);

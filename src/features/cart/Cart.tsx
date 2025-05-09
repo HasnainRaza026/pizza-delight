@@ -2,35 +2,22 @@ import Button from "../../ui/Button";
 import EmptyCart from "./EmptyCart";
 import CartSummary from "./CartSummary";
 import CartItem from "./CartItem";
-import { CartItemType } from "../../types/CartItemType";
 import { Link } from "react-router";
-
-const items: CartItemType[] = [
-  {
-    id: 1,
-    image:
-      "https://images.unsplash.com/photo-1581873372796-635b67ca2008?q=80&w=2070&auto=format&fit=crop",
-    name: "Pepperoni",
-    size: "large",
-    toppings: ["cheeze"],
-    quantity: 1,
-    price: 7.99,
-  },
-  {
-    id: 2,
-    image:
-      "https://images.unsplash.com/photo-1581873372796-635b67ca2008?q=80&w=2070&auto=format&fit=crop",
-    name: "Pepperoni",
-    size: "large",
-    toppings: ["cheeze"],
-    quantity: 1,
-    price: 7.99,
-  },
-];
+import { useDispatch, useSelector } from "react-redux";
+import { RootState } from "../../store";
+import { CartItemType } from "../../types/CartItemType";
+import { clearCart } from "./cartSlice";
+import { successToast } from "../../utils/toastFunctions";
 
 function Cart() {
-  if (false) {
-    <EmptyCart />;
+  const { cartItems } = useSelector((state: RootState) => ({
+    cartItems: state.cart.cartItems,
+  }));
+  const dispatch = useDispatch();
+  console.log(cartItems.length);
+
+  if (!cartItems.length) {
+    return <EmptyCart />;
   }
 
   return (
@@ -43,7 +30,7 @@ function Cart() {
           <div className="lg:col-span-2">
             <div className="bg-white rounded-lg shadow-md overflow-hidden">
               <div className="!p-6">
-                {items.map((item) => (
+                {cartItems.map((item: CartItemType) => (
                   <CartItem key={item.id} item={item} />
                 ))}
               </div>
@@ -54,7 +41,10 @@ function Cart() {
                 </Button>
                 <button
                   className="!ml-2 border border-gray-400 rounded !px-3 !py-2 text-gray-500 hover:text-gray-700"
-                  onClick={() => {}}
+                  onClick={() => {
+                    dispatch(clearCart());
+                    successToast("Cart has been cleared");
+                  }}
                 >
                   Clear Cart
                 </button>

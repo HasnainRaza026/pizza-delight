@@ -3,7 +3,7 @@ import toast from "react-hot-toast";
 export function successToast(msg: string) {
   toast.success(msg, {
     style: {
-      border: "1px solid #3d5a2b",
+      border: "2px solid #3d5a2b",
     },
     iconTheme: {
       primary: "#3d5a2b",
@@ -15,7 +15,7 @@ export function successToast(msg: string) {
 export function errorToast(msg: string) {
   toast.error(msg, {
     style: {
-      border: "1px solid #d62828",
+      border: "2px solid #d62828",
     },
     iconTheme: {
       primary: "#d62828",
@@ -27,5 +27,8 @@ export function errorToast(msg: string) {
 export function iconToast(msg: string, emoji: string) {
   toast(msg, {
     icon: emoji,
+    style: {
+      border: "2px solid #d62828",
+    },
   });
 }

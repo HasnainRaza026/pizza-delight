@@ -2,6 +2,7 @@ import { ShoppingCart } from "lucide-react";
 import { useSelector } from "react-redux";
 import { Link } from "react-router";
 import { CartItemType } from "../../types/CartItemType";
+import { RootState } from "../../store";
 
 type PropType = {
   type: string;
@@ -9,7 +10,7 @@ type PropType = {
 };
 
 function CartIcon({ type, headerOnMenuPage }: PropType) {
-  const { cartItems } = useSelector((state: any) => ({
+  const { cartItems } = useSelector((state: RootState) => ({
     cartItems: state.cart.cartItems,
   }));
 

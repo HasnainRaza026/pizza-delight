@@ -1,11 +1,20 @@
 import { Minus, Plus, Trash } from "lucide-react";
 import { CartItemType } from "../../types/CartItemType";
+import { useDispatch } from "react-redux";
+import {
+  decrementQuantity,
+  incrementQuantity,
+  removeFromCart,
+} from "./cartSlice";
+import { successToast } from "../../utils/toastFunctions";
 
 type CartItemProp = {
   item: CartItemType;
 };
 
 function CartItem({ item }: CartItemProp) {
+  const dispatch = useDispatch();
+
   return (
     <div className="flex flex-col sm:flex-row items-start sm:items-center !py-4 border-b border-gray-200 last:border-0">
       <div className="flex-shrink-0 w-full sm:w-20 h-20 !mb-4 sm:!mb-0">
@@ -34,20 +43,29 @@ function CartItem({ item }: CartItemProp) {
           <div className="flex items-center">
             <button
               className="h-7 w-7 bg-[#faf8f5] border border-gray-200 rounded flex justify-center items-center hover:bg-gray-200"
-              onClick={() => {}}
+              onClick={() => {
+                dispatch(decrementQuantity(1));
+                successToast(`${item.name} quantity updated`);
+              }}
             >
               <Minus className="h-3 w-3" />
             </button>
             <span className="!mx-2 w-6 text-center">{item.quantity}</span>
             <button
               className="h-7 w-7 bg-[#faf8f5] border border-gray-200 rounded flex justify-center items-center hover:bg-gray-200"
-              onClick={() => {}}
+              onClick={() => {
+                dispatch(incrementQuantity(1));
+                successToast(`${item.name} quantity updated`);
+              }}
             >
               <Plus className="h-3 w-3" />
             </button>
             <button
               className="h-7 w-7 !ml-6 text-red-500 hover:text-red-700 hover:bg-transparent"
-              onClick={() => {}}
+              onClick={() => {
+                dispatch(removeFromCart(item.id));
+                successToast(`${item.name} removed from cart`);
+              }}
             >
               <Trash className="h-4 w-4" />
             </button>
