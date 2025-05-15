@@ -1,4 +1,4 @@
-import { Link } from "react-router";
+import { Link, useNavigate } from "react-router";
 import { Menu } from "lucide-react";
 import Navigation from "./Navigation";
 import Phone from "./Phone";
@@ -11,6 +11,7 @@ import { useDispatch } from "react-redux";
 import { updateActivePizzaDetail } from "../../features/menu/menuSlice";
 import CartIcon from "./CartIcon";
 import { errorToast } from "../../utils/toastFunctions";
+import scrollToTop from "../../utils/scrollToTop";
 
 type HeaderProps = {
   type: string;
@@ -19,6 +20,7 @@ type HeaderProps = {
 function Header({ type }: HeaderProps) {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [inputSeach, setInputSerach] = useState("");
+  const navigate = useNavigate();
 
   const { menu } = useFetchMenu();
   const dispatch = useDispatch();
@@ -30,11 +32,18 @@ function Header({ type }: HeaderProps) {
       (pizza: PizzaData) =>
         pizza.name.toLocaleLowerCase() === inputSeach.toLocaleLowerCase()
     );
-    if (searchedPizza)
+    if (searchedPizza) {
       dispatch(
-        updateActivePizzaDetail({ ...searchedPizza, size: "", toppings: [] })
+        updateActivePizzaDetail({
+          ...searchedPizza,
+          size: "",
+          toppings: [],
+          quantity: 1,
+        })
       );
-    else errorToast("Couldn't find pizza");
+      navigate(`/menu/${searchedPizza.id}`);
+      scrollToTop();
+    } else errorToast("Couldn't find pizza");
   };
 
   const headerOnMenuPage = "withSearch";
