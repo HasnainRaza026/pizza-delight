@@ -2,6 +2,7 @@ import { configureStore } from "@reduxjs/toolkit";
 import menuReducer from "./features/menu/menuSlice";
 import cartReducer from "./features/cart/cartSlice";
 import favouritesReducer from "./features/favourite/favouriteSlice";
+import orderReducer from "./features/order/orderSlice";
 
 // Read the saved cart (if any) from localStorage
 const savedCart = localStorage.getItem("cartItems");
@@ -16,6 +17,7 @@ export const store = configureStore({
     menu: menuReducer,
     cart: cartReducer,
     favourites: favouritesReducer,
+    order: orderReducer,
   },
   // Preload the slices
   preloadedState: {

@@ -2,10 +2,11 @@ import { useMutation } from "@tanstack/react-query";
 import { placeOrder } from "../services/apiOrders";
 import { errorToast, successToast } from "../utils/toastFunctions";
 
-export function useMutateOrders() {
-  const { mutate, isPending } = useMutation({
+export function useMutateOrders(onSuccessFn: () => void) {
+  const { mutate, isPending, isError } = useMutation({
     mutationFn: placeOrder,
     onSuccess: () => {
+      onSuccessFn();
       successToast("Order Placed Successfully");
     },
     onError: (err) => {
@@ -13,5 +14,5 @@ export function useMutateOrders() {
     },
   });
 
-  return { mutate, isPending };
+  return { mutate, isPending, isError };
 }

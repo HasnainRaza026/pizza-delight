@@ -2,10 +2,12 @@ import { useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { Check, HomeIcon } from "lucide-react";
 import Button from "../../ui/Button";
+import { useSelector } from "react-redux";
+import { RootState } from "../../store";
 
 function OrderConfirmation() {
   const navigate = useNavigate();
-  const orderNumber = Math.floor(100000 + Math.random() * 900000); // Generate random 6-digit order number
+  const { orderId, address } = useSelector((state: RootState) => state.order);
 
   // Redirect to home if user refreshes this page
   useEffect(() => {
@@ -42,9 +44,7 @@ function OrderConfirmation() {
           </p>
 
           <div className="bg-gray-50 !p-6 rounded-lg !mb-6">
-            <h2 className="text-xl font-semibold !mb-2">
-              Order #{orderNumber}
-            </h2>
+            <h2 className="text-xl font-semibold !mb-2">Order #{orderId}</h2>
             <p className="text-gray-600 !mb-4">
               You will receive a confirmation email with your order details.
             </p>
@@ -56,11 +56,7 @@ function OrderConfirmation() {
               </div>
               <div className="flex justify-between border-b border-gray-200 !py-2">
                 <span className="font-medium">Delivery Address:</span>
-                <span className="text-right">123 Main St, Anytown</span>
-              </div>
-              <div className="flex justify-between !py-2">
-                <span className="font-medium">Payment Method:</span>
-                <span>Credit Card</span>
+                <span className="text-right">{address}</span>
               </div>
             </div>
 

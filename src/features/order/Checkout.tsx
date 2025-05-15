@@ -12,9 +12,13 @@ import { useMutateOrders } from "../../hooks/useMutateOrders";
 import generateRandom6DigitNumber from "../../utils/generateRandom6DigitNumber";
 import { OrdersType } from "../../types/OrdersType";
 import { clearCart } from "../cart/cartSlice";
+import { updateOrder } from "./orderSlice";
 
 function Checkout() {
-  const { mutate, isPending } = useMutateOrders();
+  const { mutate, isPending, isError } = useMutateOrders(() => {
+    navigate("/order-confirmed");
+    dispatch(clearCart());
+  });
   const navigate = useNavigate();
   const { cartItems } = useSelector((state: RootState) => ({
     cartItems: state.cart.cartItems,
@@ -35,6 +39,7 @@ function Checkout() {
   });
 
   const [formErrors, setFormErrors] = useState<Record<string, string>>({});
+  const [hasSubmitted, setHasSubmitted] = useState(false);
 
   const handleInputChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
@@ -74,6 +79,8 @@ function Checkout() {
       return;
     }
 
+    const orderId = generateRandom6DigitNumber();
+
     const order: OrdersType = {
       full_name: `${formData.firstName} ${formData.lastName}`,
       email: `${formData.email}`,
@@ -86,16 +93,19 @@ function Checkout() {
       total_price: parseFloat(
         (getSubTotal(cartItems) + deliveryFee + tax).toFixed(2)
       ),
-      order_id: generateRandom6DigitNumber(),
+      order_id: orderId,
     };
 
     // Placing order to the backend
     mutate(order);
-    dispatch(clearCart());
-    navigate("/order-confirmed"); // Fix Bug: redirecting to the '/cart' rather then '/order-confirmed'
+    if (isError) return;
+    dispatch(
+      updateOrder({ orderId: Number(orderId), address: formData.address })
+    );
+    setHasSubmitted(true);
   };
 
-  if (cartItems.length === 0) {
+  if (!hasSubmitted && cartItems.length === 0) {
     navigate("/cart");
     return null;
   }
