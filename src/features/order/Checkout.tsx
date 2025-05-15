@@ -3,18 +3,25 @@ import { useNavigate } from "react-router-dom";
 import { Input, TextArea } from "../../ui/InputField";
 import Button from "../../ui/Button";
 import { errorToast } from "../../utils/toastFunctions";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../store";
 import getSubTotal from "../../utils/getSubTotal";
 import { deliveryFee, tax } from "../../data/fees";
+import getOrders from "./getOrders";
+import { useMutateOrders } from "../../hooks/useMutateOrders";
+import generateRandom6DigitNumber from "../../utils/generateRandom6DigitNumber";
+import { OrdersType } from "../../types/OrdersType";
+import { clearCart } from "../cart/cartSlice";
 
 function Checkout() {
+  const { mutate, isPending } = useMutateOrders();
   const navigate = useNavigate();
   const { cartItems } = useSelector((state: RootState) => ({
     cartItems: state.cart.cartItems,
   }));
 
   const subTotal = getSubTotal(cartItems);
+  const dispatch = useDispatch();
 
   const [formData, setFormData] = useState({
     firstName: "",
@@ -28,7 +35,6 @@ function Checkout() {
   });
 
   const [formErrors, setFormErrors] = useState<Record<string, string>>({});
-  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const handleInputChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
@@ -63,19 +69,30 @@ function Checkout() {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-
     if (!validateForm()) {
       errorToast("Please fix the errors in the form");
       return;
     }
-    setIsSubmitting(true);
 
-    // Simulate API call to process order
-    setTimeout(() => {
-      setIsSubmitting(false);
-      //   clearCart();
-      navigate("/order-confirmed");
-    }, 1500);
+    const order: OrdersType = {
+      full_name: `${formData.firstName} ${formData.lastName}`,
+      email: `${formData.email}`,
+      phone: `${formData.phone}`,
+      address: `${formData.address}`,
+      city: `${formData.city}`,
+      zip_code: `${formData.zipCode}`,
+      note: `${formData.notes}`,
+      order: getOrders(cartItems),
+      total_price: parseFloat(
+        (getSubTotal(cartItems) + deliveryFee + tax).toFixed(2)
+      ),
+      order_id: generateRandom6DigitNumber(),
+    };
+
+    // Placing order to the backend
+    mutate(order);
+    dispatch(clearCart());
+    navigate("/order-confirmed"); // Fix Bug: redirecting to the '/cart' rather then '/order-confirmed'
   };
 
   if (cartItems.length === 0) {
@@ -235,9 +252,9 @@ function Checkout() {
               <Button
                 type="submit"
                 className="w-full bg-pizza-red hover:bg-pizza-tomato"
-                disabled={isSubmitting}
+                disabled={isPending}
               >
-                {isSubmitting ? "Processing..." : "Place Order"}
+                {isPending ? "Processing..." : "Place Order"}
               </Button>
             </form>
           </div>
