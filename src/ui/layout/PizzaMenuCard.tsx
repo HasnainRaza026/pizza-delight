@@ -60,6 +60,7 @@ function PizzaMenuCard({ pizza, placedOn }: PizzaMenuCardProps) {
         size: "medium",
         toppings: [],
         quantity: 1,
+        basePrice: pizza.price,
       })
     );
     successToast(`${pizza.name} added to cart`);
