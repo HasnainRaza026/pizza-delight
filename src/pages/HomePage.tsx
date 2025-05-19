@@ -112,7 +112,7 @@ function HeroSection() {
       <div
         className="absolute inset-0 z-0 bg-cover bg-no-repeat bg-center"
         style={{
-          backgroundImage: "url('./src/assets/img-hero.jpg')",
+          backgroundImage: "url('/src/assets/img-hero.jpg')",
           filter: "brightness(0.4)",
         }}
       ></div>
