@@ -1,13 +1,20 @@
-import { createBrowserRouter, RouterProvider } from "react-router";
+import { Suspense, lazy } from "react";
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import MainLayout from "./pages/MainLayout";
+
+// Eagerly loaded HomePage
 import HomePage from "./pages/HomePage";
-import MenuPage from "./pages/MenuPage";
-import AboutPage from "./pages/AboutPage";
-import ContactPage from "./pages/ContactPage";
-import CartPage from "./pages/CartPage";
-import OrderConfirmationPage from "./pages/OrderConfirmationPage";
-import PizzaDetail from "./features/menu/PizzaDetail";
-import CheckoutPage from "./pages/CheckoutPage";
+
+// Lazy-loaded pages
+const MenuPage = lazy(() => import("./pages/MenuPage"));
+const PizzaDetail = lazy(() => import("./features/menu/PizzaDetail"));
+const AboutPage = lazy(() => import("./pages/AboutPage"));
+const ContactPage = lazy(() => import("./pages/ContactPage"));
+const CartPage = lazy(() => import("./pages/CartPage"));
+const CheckoutPage = lazy(() => import("./pages/CheckoutPage"));
+const OrderConfirmationPage = lazy(
+  () => import("./pages/OrderConfirmationPage")
+);
 
 const router = createBrowserRouter([
   {
@@ -53,7 +60,11 @@ const router = createBrowserRouter([
 ]);
 
 function App() {
-  return <RouterProvider router={router} />;
+  return (
+    <Suspense fallback={<div>Loading...</div>}>
+      <RouterProvider router={router} />
+    </Suspense>
+  );
 }
 
 export default App;
