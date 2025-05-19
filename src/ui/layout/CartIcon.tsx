@@ -1,7 +1,6 @@
 import { ShoppingCart } from "lucide-react";
 import { useSelector } from "react-redux";
 import { Link } from "react-router";
-import { CartItemType } from "../../types/CartItemType";
 import { RootState } from "../../store";
 
 type PropType = {
@@ -15,11 +14,7 @@ function CartIcon({ type, headerOnMenuPage }: PropType) {
   }));
 
   const getCartQuantity = () => {
-    let cartQuantity = 0;
-    const _ = cartItems.map((item: CartItemType) => {
-      cartQuantity += item.quantity;
-    });
-    return cartQuantity;
+    return cartItems.reduce((sum, item) => sum + item.quantity, 0);
   };
 
   const quantity = getCartQuantity();

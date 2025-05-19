@@ -1,11 +1,19 @@
-import { createSlice } from "@reduxjs/toolkit";
-import { CartItemType } from "../../types/CartItemType";
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
-type StateType = {
-  ActivePizzaDetail: CartItemType & {
-    description: string;
-  };
-};
+interface ActivePizzaDetailType {
+  id: number;
+  name: string;
+  description: string;
+  price: number;
+  image: string;
+  size: string;
+  toppings: string[];
+  quantity: number;
+}
+
+interface StateType {
+  ActivePizzaDetail: ActivePizzaDetailType;
+}
 
 const initialState: StateType = {
   ActivePizzaDetail: {
@@ -24,13 +32,16 @@ const menuSlice = createSlice({
   name: "menu",
   initialState,
   reducers: {
-    updateActivePizzaDetail(state, action) {
+    updateActivePizzaDetail(
+      state,
+      action: PayloadAction<ActivePizzaDetailType>
+    ) {
       state.ActivePizzaDetail = action.payload;
     },
-    updateActivePizzaDetailSize(state, action) {
+    updateActivePizzaDetailSize(state, action: PayloadAction<string>) {
       state.ActivePizzaDetail.size = action.payload;
     },
-    updateActivePizzaDetailToppings(state, action) {
+    updateActivePizzaDetailToppings(state, action: PayloadAction<string>) {
       const topping = action.payload;
       const exists = state.ActivePizzaDetail.toppings.includes(topping);
       if (exists) {
