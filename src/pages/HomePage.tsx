@@ -12,6 +12,7 @@ import { useFetchMenu } from "../hooks/useFetchMenu";
 import { useNavigate } from "react-router";
 import { useDispatch } from "react-redux";
 import { updateActivePizzaDetail } from "../features/menu/menuSlice";
+import herImg from "../assets/img-hero.jpg";
 
 const SectionHeading = styled.h2`
   font-family: var(--font-heading);
@@ -112,7 +113,7 @@ function HeroSection() {
       <div
         className="absolute inset-0 z-0 bg-cover bg-no-repeat bg-center"
         style={{
-          backgroundImage: "url('/src/assets/img-hero.jpg')",
+          backgroundImage: `url('${herImg}')`,
           filter: "brightness(0.4)",
         }}
       ></div>
