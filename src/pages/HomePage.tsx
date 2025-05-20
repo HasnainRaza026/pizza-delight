@@ -12,7 +12,6 @@ import { useFetchMenu } from "../hooks/useFetchMenu";
 import { useNavigate } from "react-router";
 import { useDispatch } from "react-redux";
 import { updateActivePizzaDetail } from "../features/menu/menuSlice";
-import herImg from "../assets/img-hero.jpg";
 
 const SectionHeading = styled.h2`
   font-family: var(--font-heading);
@@ -113,7 +112,8 @@ function HeroSection() {
       <div
         className="absolute inset-0 z-0 bg-cover bg-no-repeat bg-center"
         style={{
-          backgroundImage: `url('${herImg}')`,
+          backgroundImage:
+            "url('https://images.unsplash.com/photo-1513104890138-7c749659a591?q=80&w=1470&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D')",
           filter: "brightness(0.4)",
         }}
       ></div>

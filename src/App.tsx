@@ -1,11 +1,10 @@
 import { Suspense, lazy } from "react";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import MainLayout from "./pages/MainLayout";
-
-// Eagerly loaded HomePage
-import HomePage from "./pages/HomePage";
+import PageLoader from "./ui/layout/PageLoader";
 
 // Lazy-loaded pages
+const HomePage = lazy(() => import("./pages/HomePage"));
 const MenuPage = lazy(() => import("./pages/MenuPage"));
 const PizzaDetail = lazy(() => import("./features/menu/PizzaDetail"));
 const AboutPage = lazy(() => import("./pages/AboutPage"));
@@ -61,7 +60,7 @@ const router = createBrowserRouter([
 
 function App() {
   return (
-    <Suspense fallback={<div>Loading...</div>}>
+    <Suspense fallback={<PageLoader />}>
       <RouterProvider router={router} />
     </Suspense>
   );
